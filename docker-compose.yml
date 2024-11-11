@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: ["npm", "start"]
+
+  backend:
+    image: mcr.microsoft.com/azure-functions/dotnet-isolated:4
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      - SqlConnectionString=Server=db;Database=MemoAppDB;User Id=sa;Password=YourStrong!Passw0rd;
+    depends_on:
+      - db
+    ports:
+      - "7071:80"
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+
+volumes:
+  sqlvolume:
