@@ -27,7 +27,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong!Passw0rd
+      - SA_PASSWORD=s723$#wiod7sd#%
     ports:
       - "1433:1433"
     volumes:
