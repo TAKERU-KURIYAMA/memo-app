@@ -6,9 +6,10 @@ services:
     working_dir: /app
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     ports:
       - "3000:3000"
-    command: ["npm", "start"]
+    command: ["/bin/sh", "-c", "npm install && npm start"]
 
   backend:
     image: mcr.microsoft.com/azure-functions/dotnet-isolated:4
