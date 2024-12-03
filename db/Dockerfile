@@ -1,6 +1,9 @@
 # ベースイメージとして公式 SQL Server イメージを使用
 FROM mcr.microsoft.com/mssql/server:2019-latest
 
+# 必要なツールをインストールする前にroot権限に切り替える
+USER root
+
 # 必要なツールをインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg2 && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -10,8 +13,8 @@ RUN apt-get update && apt-get install -y curl apt-transport-https gnupg2 && \
     echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 環境変数を設定
-ENV PATH="$PATH:/opt/mssql-tools/bin"
+# デフォルトの非rootユーザーに戻す
+USER mssql
 
 # デフォルトコマンドを維持
 CMD ["/opt/mssql/bin/sqlservr"]
