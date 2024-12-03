@@ -17,7 +17,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - SqlConnectionString=Server=db;Database=MemoAppDB;User Id=sa;Password=YourStrong!Passw0rd;
+      - SqlConnectionString=Server=db;Database=MemoAppDB;User Id=sa;Password=s723Ewio@d7sdD;
     depends_on:
       - db
     ports:
@@ -32,6 +32,7 @@ services:
       - "1433:1433"
     volumes:
       - sqlvolume:/var/opt/mssql
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
 volumes:
   sqlvolume:
