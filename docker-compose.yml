@@ -24,7 +24,9 @@ services:
       - "7071:80"
 
   db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    build:
+      context: .
+      dockerfile: db/Dockerfile
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=s723Ewio@d7sdD
@@ -32,7 +34,6 @@ services:
       - "1433:1433"
     volumes:
       - sqlvolume:/var/opt/mssql
-      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
 volumes:
   sqlvolume:
